@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+		{margin:0px;border:0px;padding:0px;}
+		  #container {
+		  	width:380px;
+		  	height:300px;
+            overflow:hidden;
+            position:relative;
+		  }
+          #nav_1 {
+          }
+          #nav_1 li {
+          	float:left;
+            padding:10px 15px;
+            border:1px solid black;
+            background:blue;
+            text-decoration:none;
+            list-style:none;
+          }
+          #nav_1 .select {
+          	border-bottom:0px;
+          	background:none;
+          }
+          .clear {
+          	clear:both;
+          }
+           #rscrool {
+          	width:35px;
+          	height:40px;
+          	background:url(images1/20141210124226.png);
+          	position:absolute;
+          	top:170px;
+          	left:360px;
+          	display:none;
+          	z-index:2;
+          }
+          #cont:hover #rscrool{
+          	display:block;
+          }
+          #lscrool {
+          	width:35px;
+          	height:40px;
+          	background:url(images1/20141210124201.png);
+          	position:absolute;
+          	top:170px;
+          	left:40px;
+          	display:none;
+          	z-index:2;
+          }
+          #cont:hover #lscrool{
+          	display:block;
+          }
+          
+          #cont {
+            
+          }
+          #cont_1 {
+            width:3950px;
+            height:280px;
+            position:absolute;
+          }
+          #cont_1 li {
+          	float:left;
+          	list-style:none;
+          }
+		</style>
+		<script>
+        window.onload = function() {
+          var nav = document.getElementById("nav_1").getElementsByTagName("li");
+          var rscrool = document.getElementById("rscrool");
+          var lscrool = document.getElementById("lscrool");
+          var cont = document.getElementById("cont_1");
+          var index = 1,len = nav.length;
+          var time;
+
+          function animate(offset) {
+            var newLeft = cont.offsetLeft + offset;
+            cont.style.left = newLeft + "px";
+
+             if(newLeft < -1520)
+               cont.style.left = 0 + "px";
+             if(newLeft > 0)
+               cont.style.left = -1520 + "px";
+          }
+
+          function cha() {
+            for(var i = 0;i < len;i++){
+              if(nav[i].className == "select")
+                 nav[i].className = ""; 
+            }
+            nav[index - 1].className = "select";
+          }
+
+          for(var i = 0;i < len;i++){
+            nav[i].onmouseover = function() {
+              if(this.className == "select")
+                return;
+              var myIndex = parseInt(this.getAttribute("index"));
+              var offset = -380 * (myIndex - index);
+
+              animate(offset);
+              index = myIndex;
+              cha();
+            }
+          }
+
+          function play() {
+            time = setInterval(function() {
+              rscrool.onclick();
+            },2000);
+          }
+          
+          function stop() {
+            clearInterval(time);
+          }
+
+          rscrool.onclick = function() {
+            if(index == len)
+              index = 1;
+            else
+              index++;
+            cha();
+            animate(-380);
+          }
+          
+          lscrool.onclick = function() {
+            if(index == 1)
+              index = len;
+            else
+              index--;
+            cha();
+            animate(380);
+          }
+          
+          cont.onmouseover = stop;
+          cont.onmouseout = play;
+
+          play();
+
+        }
+		</script>
+	</head>
+    
+	<body>
+		<div id = "container">
+			<div id = "nav">
+				<ul id = "nav_1">
+					<li class = "select" index="1"><a herf = "javascript:;">聚焦</a></li>
+					<li index="2"><a herf = "javascript:;">热点</a></li>
+					<li index="3"><a herf = "javascript:;">独家</a></li>
+					<li index="4"><a herf = "javascript:;">百态</a></li>
+					<li index="5"><a herf = "javascript:;">军事</a></li>
+				</ul>
+			</div>
+			<div class = "clear"></div>
+			<div id = "cont">
+				<div id="scrool">
+				    <a href="javascript:;" id = "rscrool"></a>
+				    <a href="javascript:;" id = "lscrool"></a>
+			    </div>
+				<ul id = "cont_1" style = "left:0px;">
+					<li><a href="javascript:;"><img src = "images1/0.png" alt = ""></a></li>
+					<li><a href="javascript:;"><img src = "images1/1.png" alt = ""></a></li>
+					<li><a href="javascript:;"><img src = "images1/2.png" alt = ""></a></li>
+					<li><a href="javascript:;"><img src = "images1/3.png" alt = ""></a></li>
+					<li><a href="javascript:;"><img src = "images1/4.png" alt = ""></a></li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
